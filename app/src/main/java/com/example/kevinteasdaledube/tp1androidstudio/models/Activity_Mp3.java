@@ -16,15 +16,15 @@ import com.example.kevinteasdaledube.tp1androidstudio.R;
 
 import java.io.IOException;
 
-public class Activity_Mp3 extends AppCompatActivity {
+public class Activity_Mp3 extends AppCompatActivity implements Jouable {
 
-    String url;
-    ProgressBar progressBar;
+    static String url;
+    static ProgressBar progressBar;
     int currentPosition;
     Button btnPause;
     Button btnStop;
     Button btnPlay;
-    MediaPlayer mediaPlayer;
+    static MediaPlayer mediaPlayer;
     boolean isPlaying = true;
     boolean fisrtTime = true;
 
@@ -37,9 +37,6 @@ public class Activity_Mp3 extends AppCompatActivity {
         setContentView( R.layout.layout_mp3 );
         progressBar = (ProgressBar)findViewById( R.id.progressBar ) ;
         progressBar.setVisibility( View.INVISIBLE );
-
-
-
 
         ImageView imageView = (ImageView) findViewById( R.id.imageViewMp3);
         imageView.setImageResource( R.drawable.mp3 );
@@ -67,13 +64,7 @@ public class Activity_Mp3 extends AppCompatActivity {
         btnPause.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (isPlaying) {
-                    mediaPlayer.pause();
-                    currentPosition = mediaPlayer.getCurrentPosition();
-                    btnPlay.setEnabled( true );
-                    btnPause.setEnabled( false );
-                    isPlaying = false;
-                }
+               Pause();
 
             }
         } );
@@ -82,10 +73,7 @@ public class Activity_Mp3 extends AppCompatActivity {
         btnStop.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    mediaPlayer.stop();
-                    currentPosition = 0;
-                    fisrtTime = true;
-                    btnPlay.setEnabled( true );
+                   Stop();
             }
         } );
 
@@ -94,26 +82,49 @@ public class Activity_Mp3 extends AppCompatActivity {
         btnPlay.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (fisrtTime){
-                    Mp3Player mp3Player = new Mp3Player();
-                    mp3Player.execute( );
-                    fisrtTime = false;
-                }
-
-                if (!isPlaying) {
-                    mediaPlayer.seekTo( currentPosition );
-                    mediaPlayer.start();
-                }
-                btnPause.setEnabled( true );
-                btnPlay.setEnabled( false );
+                Play();
             }
         } );
 
 
     }
 
+    @Override
+    public void Play() {
+        if (fisrtTime){
+            Mp3Player mp3Player = new Mp3Player();
+            mp3Player.execute( );
+            fisrtTime = false;
+        }
 
-    private class Mp3Player extends AsyncTask<Void,Void,Void>{
+        if (!isPlaying) {
+            mediaPlayer.seekTo( currentPosition );
+            mediaPlayer.start();
+        }
+        btnPlay.setEnabled( false );
+        isPlaying = true;
+    }
+
+    @Override
+    public void Stop() {
+        mediaPlayer.stop();
+        currentPosition = 0;
+        fisrtTime = true;
+        btnPlay.setEnabled( true );
+    }
+
+    @Override
+    public void Pause() {
+        if (isPlaying) {
+            mediaPlayer.pause();
+            currentPosition = mediaPlayer.getCurrentPosition();
+            btnPlay.setEnabled( true );
+            isPlaying = false;
+        }
+    }
+
+
+    private static class Mp3Player extends AsyncTask<Void,Void,Void>{
 
         private Mp3Player(){
 
@@ -121,9 +132,8 @@ public class Activity_Mp3 extends AppCompatActivity {
 
         @Override
         protected void onPreExecute() {
+
             super.onPreExecute();
-            Toast toast = Toast.makeText( Activity_Mp3.this, "Téléchargement en cours", Toast.LENGTH_LONG );
-            toast.show();
             progressBar.setMax( 10 );
             progressBar.setVisibility( View.VISIBLE );
         }

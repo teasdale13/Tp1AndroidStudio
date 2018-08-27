@@ -9,11 +9,14 @@ import android.widget.ImageView;
 import android.widget.VideoView;
 import com.example.kevinteasdaledube.tp1androidstudio.R;
 
-public class Activity_Mp4 extends AppCompatActivity {
+public class Activity_Mp4 extends AppCompatActivity implements Jouable {
 
     String url;
     VideoView videoView;
     int stopPosition = 0;
+    Button btnPlay;
+    Button btnStop;
+    Button btnPause;
 
 
 
@@ -34,20 +37,15 @@ public class Activity_Mp4 extends AppCompatActivity {
         String title = monMp4.getTitle();
         url = monMp4.getUrl();
 
-        final Button btnPlay = (Button) findViewById( R.id.buttonPlay );
-        Button btnPause = (Button) findViewById( R.id.buttonPause );
-        Button btnStop = (Button) findViewById( R.id.buttonStop );
+        btnPlay = (Button) findViewById( R.id.buttonPlay );
+        btnPause = (Button) findViewById( R.id.buttonPause );
+        btnStop = (Button) findViewById( R.id.buttonStop );
 
 
         btnPlay.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-                videoView = (VideoView) findViewById( R.id.videoView );
-                videoView.setVideoURI( Uri.parse( url ) );
-                videoView.seekTo( stopPosition );
-                videoView.start();
-                btnPlay.setEnabled( false );
+            Play();
 
             }
         } );
@@ -55,22 +53,41 @@ public class Activity_Mp4 extends AppCompatActivity {
         btnPause.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                videoView.pause();
-                stopPosition = videoView.getCurrentPosition();
-                btnPlay.setEnabled( true );
+                Pause();
             }
         } );
 
         btnStop.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                videoView.stopPlayback();
-                stopPosition = 0;
-                btnPlay.setEnabled( true );
+                Stop();
             }
         } );
 
 
     }
 
+    @Override
+    public void Play() {
+        videoView = (VideoView) findViewById( R.id.videoView );
+        videoView.setVideoURI( Uri.parse( url ) );
+        videoView.seekTo( stopPosition );
+        videoView.start();
+        btnPlay.setEnabled( false );
+    }
+
+    @Override
+    public void Stop() {
+        videoView.stopPlayback();
+        stopPosition = 0;
+        btnPlay.setEnabled( true );
+
+    }
+
+    @Override
+    public void Pause() {
+        videoView.pause();
+        stopPosition = videoView.getCurrentPosition();
+        btnPlay.setEnabled( true );
+    }
 }
