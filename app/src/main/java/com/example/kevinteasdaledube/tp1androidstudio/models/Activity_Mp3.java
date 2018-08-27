@@ -119,6 +119,7 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
             mediaPlayer.pause();
             currentPosition = mediaPlayer.getCurrentPosition();
             btnPlay.setEnabled( true );
+            btnPause.setEnabled( false );
             isPlaying = false;
         }
     }
