@@ -31,12 +31,10 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
         public ViewHolder(View view) {
             super(view);
             view.setOnClickListener( this );
-            //view.setOnLongClickListener( this );
             viewGroup = (ViewGroup) view.findViewById( R.id.detailLayout);
             title = view.findViewById(R.id.textViewTitle1 );
             mediaType = view.findViewById( R.id.textViewMediaType );
         }
-
 
 
         @Override
