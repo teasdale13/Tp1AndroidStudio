@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.VideoView;
 import com.example.kevinteasdaledube.tp1androidstudio.R;
 
@@ -17,12 +18,14 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
     Button btnPlay;
     Button btnStop;
     Button btnPause;
+    TextView textViewTitle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.layout_mp4 );
 
+        //propriétés de l'image
         ImageView imageView = (ImageView) findViewById( R.id.imageViewType );
         imageView.setImageResource( R.drawable.mp4 );
         imageView.setMaxHeight( 400 );
@@ -34,7 +37,10 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
 
         String title = monMp4.getTitle();
         url = monMp4.getUrl();
-
+        //Widgets
+        textViewTitle = (TextView)findViewById( R.id.textViewTitleMp4 );
+        textViewTitle.setText("Titre : " + title );
+        textViewTitle.setVisibility( View.VISIBLE );
         btnPlay = (Button) findViewById( R.id.buttonPlay );
         btnPause = (Button) findViewById( R.id.buttonPause );
         btnStop = (Button) findViewById( R.id.buttonStop );

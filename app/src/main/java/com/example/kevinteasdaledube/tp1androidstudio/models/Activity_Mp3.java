@@ -54,9 +54,6 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
         textViewTitle.setText("Titre: " + title);
         textViewArtist.setText("Artiste: " + artist );
 
-
-
-
         url = monMp3.getUrl().trim();
 
 
@@ -73,8 +70,6 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
             @Override
             public void onClick(View v) {
                 Stop();
-
-
             }
         } );
 
@@ -153,10 +148,8 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
                 }
                 progressBar.setVisibility( View.INVISIBLE );
                 mediaPlayer.start();
-                
+
             } catch (IOException e) {
-                e.printStackTrace();
-            //} catch (InterruptedException e) {
                 e.printStackTrace();
             } catch (IllegalStateException e){
                 e.printStackTrace();
