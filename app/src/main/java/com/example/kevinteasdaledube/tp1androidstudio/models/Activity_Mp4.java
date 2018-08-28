@@ -18,8 +18,6 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
     Button btnStop;
     Button btnPause;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
@@ -63,8 +61,6 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
                 Stop();
             }
         } );
-
-
     }
 
     @Override
@@ -81,7 +77,6 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
         videoView.stopPlayback();
         stopPosition = 0;
         btnPlay.setEnabled( true );
-
     }
 
     @Override

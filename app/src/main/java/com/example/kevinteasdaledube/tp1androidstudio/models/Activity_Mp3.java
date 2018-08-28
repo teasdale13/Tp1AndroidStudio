@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.kevinteasdaledube.tp1androidstudio.R;
 
@@ -18,15 +17,16 @@ import java.io.IOException;
 
 public class Activity_Mp3 extends AppCompatActivity implements Jouable {
 
-    static String url;
-    static ProgressBar progressBar;
+    String url;
+    ProgressBar progressBar;
     int currentPosition;
     Button btnPause;
     Button btnStop;
     Button btnPlay;
-    static MediaPlayer mediaPlayer;
     boolean isPlaying = true;
-    boolean fisrtTime = true;
+    boolean firstTime = true;
+    boolean onStop = false;
+    MediaPlayer mediaPlayer;
 
 
 
@@ -58,14 +58,13 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
 
 
         url = monMp3.getUrl().trim();
-        mediaPlayer = new MediaPlayer();
+
 
         btnPause = (Button) findViewById( R.id.buttonPauseMp3 );
         btnPause.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               Pause();
-
+                Pause();
             }
         } );
 
@@ -73,7 +72,9 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
         btnStop.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                   Stop();
+                Stop();
+
+
             }
         } );
 
@@ -82,35 +83,35 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
         btnPlay.setOnClickListener( new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Play();
+               Play();
             }
         } );
-
-
     }
 
     @Override
     public void Play() {
-        if (fisrtTime){
+        if (firstTime){
+            mediaPlayer = new MediaPlayer();
             Mp3Player mp3Player = new Mp3Player();
-            mp3Player.execute( );
-            fisrtTime = false;
+            mp3Player.execute();
+            firstTime = false;
         }
 
-        if (!isPlaying) {
+        if (!isPlaying ) {
             mediaPlayer.seekTo( currentPosition );
             mediaPlayer.start();
         }
         btnPlay.setEnabled( false );
+        btnPause.setEnabled( true );
         isPlaying = true;
     }
 
     @Override
     public void Stop() {
         mediaPlayer.stop();
-        currentPosition = 0;
-        fisrtTime = true;
+        mediaPlayer.release();
         btnPlay.setEnabled( true );
+        firstTime = true;
     }
 
     @Override
@@ -121,11 +122,11 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
             btnPlay.setEnabled( true );
             btnPause.setEnabled( false );
             isPlaying = false;
+            onStop = true;
         }
     }
 
-
-    private static class Mp3Player extends AsyncTask<Void,Void,Void>{
+    private class Mp3Player extends AsyncTask<Void,Void,Void>{
 
         private Mp3Player(){
 
@@ -133,7 +134,6 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
 
         @Override
         protected void onPreExecute() {
-
             super.onPreExecute();
             progressBar.setMax( 10 );
             progressBar.setVisibility( View.VISIBLE );
@@ -141,7 +141,6 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
 
         @Override
         protected Void doInBackground(Void... voids) {
-
             try {
                 mediaPlayer.setAudioStreamType( AudioManager.STREAM_MUSIC );
                 mediaPlayer.setDataSource( url );
@@ -154,10 +153,12 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
                 }
                 progressBar.setVisibility( View.INVISIBLE );
                 mediaPlayer.start();
-
-
-
+                
             } catch (IOException e) {
+                e.printStackTrace();
+            //} catch (InterruptedException e) {
+                e.printStackTrace();
+            } catch (IllegalStateException e){
                 e.printStackTrace();
             } catch (InterruptedException e) {
                 e.printStackTrace();

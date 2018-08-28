@@ -15,13 +15,12 @@ import java.util.List;
 
 public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
 
-
     private static List<Media> mediaList;
-    private Context context;
+    private static Context context;
 
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener , Serializable {
+    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener , Serializable {
 
         private final TextView title;
         private final TextView mediaType;
@@ -35,7 +34,6 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
             title = view.findViewById(R.id.textViewTitle1 );
             mediaType = view.findViewById( R.id.textViewMediaType );
         }
-
 
         @Override
         public void onClick(View v) {
