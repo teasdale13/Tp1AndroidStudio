@@ -88,27 +88,28 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
 
-            holder.title.setText( mediaList.get( position ).getTitle() );
+            holder.title.setText("Titre : " + mediaList.get( position ).getTitle() );
 
            if (Media.type.Book.equals( mediaList.get( position ).getMediaType())) {
 
-               holder.mediaType.setText( mediaList.get( position ).getMediaType().getType() );
+               holder.mediaType.setText("Type : " + mediaList.get( position ).getMediaType().getType() );
 
             }else if (Media.type.CD.equals( mediaList.get( position ).getMediaType())){
 
-               holder.mediaType.setText( mediaList.get( position ).getMediaType().getType() );
+               holder.mediaType.setText("Type : " + mediaList.get( position ).getMediaType().getType() );
 
             }else if (Media.type.DVD.equals( mediaList.get( position ).getMediaType())){
 
-               holder.mediaType.setText( mediaList.get( position ).getMediaType().getType() );
-            }else if (Media.type.MP3.equals( mediaList.get( position ).getMediaType())){
+               holder.mediaType.setText("Type : " + mediaList.get( position ).getMediaType().getType() );
 
-               holder.mediaType.setText( mediaList.get( position ).getMediaType().getType() );
+           }else if (Media.type.MP3.equals( mediaList.get( position ).getMediaType())){
+
+               holder.mediaType.setText("Type : " + mediaList.get( position ).getMediaType().getType() );
 
             }else if (Media.type.MP4.equals( mediaList.get( position ).getMediaType())){
 
-               holder.mediaType.setText( mediaList.get( position ).getMediaType().getType() );
-            }
+               holder.mediaType.setText("Type : " + mediaList.get( position ).getMediaType().getType() );
+           }
 
     }
 

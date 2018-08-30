@@ -6,37 +6,45 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.kevinteasdaledube.tp1androidstudio.R;
 
 import java.io.IOException;
 
+
+
 public class Activity_Mp3 extends AppCompatActivity implements Jouable {
 
-    String url;
-    ProgressBar progressBar;
+    static String url;
+    static ImageView imageView;
     int currentPosition;
     Button btnPause;
     Button btnStop;
     Button btnPlay;
-    boolean isPlaying = true;
+    static boolean isPlaying = true;
     boolean firstTime = true;
     boolean onStop = false;
-    MediaPlayer mediaPlayer;
+    static MediaPlayer mediaPlayer;
+    static RotateAnimation anim;
 
-
-
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mediaPlayer.release();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.layout_mp3 );
-        progressBar = (ProgressBar)findViewById( R.id.progressBar ) ;
-        progressBar.setVisibility( View.INVISIBLE );
+        imageView = (ImageView)findViewById( R.id.note );
 
         ImageView imageView = (ImageView) findViewById( R.id.imageViewMp3);
         imageView.setImageResource( R.drawable.mp3 );
@@ -45,18 +53,19 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
         imageView.setVisibility( View.VISIBLE );
         TextView textViewTitle = (TextView) findViewById( R.id.textViewTitleMp3 );
         TextView textViewArtist = (TextView)findViewById( R.id.textViewArtistMp3 );
-        Media monMedia = (Media) getIntent().getSerializableExtra( "info");
 
+        //récupération des extras passé entre activitée
+        Media monMedia = (Media) getIntent().getSerializableExtra( "info");
         Mp3 monMp3 = (Mp3) monMedia;
         String title = monMp3.getTitle();
         String artist = monMp3.getArtist();
 
-        textViewTitle.setText("Titre: " + title);
-        textViewArtist.setText("Artiste: " + artist );
+        textViewTitle.setText("Titre : " + title);
+        textViewArtist.setText("Artiste : " + artist );
 
-        url = monMp3.getUrl().trim();
+        url = monMp3.getUrl();
 
-
+        //boutons
         btnPause = (Button) findViewById( R.id.buttonPauseMp3 );
         btnPause.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -72,7 +81,6 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
                 Stop();
             }
         } );
-
 
         btnPlay = (Button) findViewById( R.id.buttonPlay );
         btnPlay.setOnClickListener( new View.OnClickListener() {
@@ -95,10 +103,12 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
         if (!isPlaying ) {
             mediaPlayer.seekTo( currentPosition );
             mediaPlayer.start();
+            isPlaying = true;
+
         }
         btnPlay.setEnabled( false );
         btnPause.setEnabled( true );
-        isPlaying = true;
+
     }
 
     @Override
@@ -121,7 +131,7 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
         }
     }
 
-    private class Mp3Player extends AsyncTask<Void,Void,Void>{
+    private static class Mp3Player extends AsyncTask<Void,Void,Void>{
 
         private Mp3Player(){
 
@@ -130,8 +140,7 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
-            progressBar.setMax( 10 );
-            progressBar.setVisibility( View.VISIBLE );
+
         }
 
         @Override
@@ -141,14 +150,18 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
                 mediaPlayer.setDataSource( url );
                 mediaPlayer.prepare();
                 int count = 0;
-                while (count < 11){
-                    progressBar.setProgress( count );
-                    Thread.sleep( 500 );
+                anim = new RotateAnimation(0f, 360f,Animation.RELATIVE_TO_SELF, 0.5f,
+                        Animation.RELATIVE_TO_SELF, 0.5f);
+                while (count < 8){
+                    anim.setInterpolator(new LinearInterpolator());
+                    anim.setRepeatCount( Animation.INFINITE);
+                    anim.setDuration(925);
+                    imageView.startAnimation(anim);
                     count++;
+                    Thread.sleep( 900 );
                 }
-                progressBar.setVisibility( View.INVISIBLE );
+                anim.cancel();
                 mediaPlayer.start();
-
             } catch (IOException e) {
                 e.printStackTrace();
             } catch (IllegalStateException e){
@@ -158,7 +171,9 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
             }
 
             return null;
+
         }
 
     }
+
 }

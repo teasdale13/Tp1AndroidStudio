@@ -14,11 +14,13 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
 
     String url;
     VideoView videoView;
-    int stopPosition = 0;
+    int stopPosition;
     Button btnPlay;
     Button btnStop;
     Button btnPause;
     TextView textViewTitle;
+    boolean firstime = true;
+    boolean onPause = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,7 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
 
         String title = monMp4.getTitle();
         url = monMp4.getUrl();
+
         //Widgets
         textViewTitle = (TextView)findViewById( R.id.textViewTitleMp4 );
         textViewTitle.setText("Titre : " + title );
@@ -44,7 +47,6 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
         btnPlay = (Button) findViewById( R.id.buttonPlay );
         btnPause = (Button) findViewById( R.id.buttonPause );
         btnStop = (Button) findViewById( R.id.buttonStop );
-
 
         btnPlay.setOnClickListener( new View.OnClickListener() {
             @Override
@@ -71,18 +73,26 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
 
     @Override
     public void Play() {
-        videoView = (VideoView) findViewById( R.id.videoView );
-        videoView.setVideoURI( Uri.parse( url ) );
-        videoView.seekTo( stopPosition );
-        videoView.start();
-        btnPlay.setEnabled( false );
+        if (firstime) {
+            videoView = (VideoView) findViewById( R.id.videoView );
+            videoView.setVideoURI( Uri.parse( url ) );
+            videoView.start();
+            btnPlay.setEnabled( false );
+            firstime = false;
+        }if (onPause){
+            videoView.seekTo( stopPosition );
+            videoView.start();
+            onPause = false;
+            btnPlay.setEnabled( false );
+        }
     }
 
     @Override
     public void Stop() {
         videoView.stopPlayback();
-        stopPosition = 0;
         btnPlay.setEnabled( true );
+        firstime = true;
+        btnPause.setEnabled( true );
     }
 
     @Override
@@ -90,5 +100,6 @@ public class Activity_Mp4 extends AppCompatActivity implements Jouable {
         videoView.pause();
         stopPosition = videoView.getCurrentPosition();
         btnPlay.setEnabled( true );
+        onPause = true;
     }
 }

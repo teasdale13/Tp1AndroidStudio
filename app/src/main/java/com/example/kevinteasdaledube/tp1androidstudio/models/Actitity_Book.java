@@ -26,7 +26,7 @@ public class Actitity_Book extends AppCompatActivity {
             TextView viewAuthor = (TextView) findViewById( R.id.textViewAuthor );
             TextView viewSummary = (TextView) findViewById( R.id.textViewSummary );
             TextView viewIsbn = (TextView) findViewById( R.id.textViewIsbn );
-            TextView viewLoca = (TextView) findViewById( R.id.textViewlocalization );
+            TextView viewLoca = (TextView) findViewById( R.id.textView );
 
             Book monBook = (Book) monMedia;
 
@@ -42,11 +42,11 @@ public class Actitity_Book extends AppCompatActivity {
             String localization = monBook.getLocalization();
             String title = monBook.getTitle();
 
-            viewTitle.setText("Titre: " + title );
-            viewAuthor.setText("Auteur: " + author );
+            viewTitle.setText("Titre : " + title );
+            viewAuthor.setText("Auteur : " + author );
             viewSummary.setText( summary );
-            viewLoca.setText("Localisation: " + localization );
-            viewIsbn.setText("ISBN: " + isbn );
+            viewLoca.setText("Localisation : " + localization );
+            viewIsbn.setText("ISBN : " + isbn );
 
 
 

@@ -18,7 +18,7 @@ public class Activity_Dvd extends AppCompatActivity {
 
         ImageView imageView = (ImageView) findViewById( R.id.imageViewDvd);
         imageView.setImageResource( R.drawable.dvd );
-        imageView.setMaxHeight( 400 );
+        imageView.setMaxHeight( 500 );
         imageView.setAdjustViewBounds( true );
         imageView.setVisibility( View.VISIBLE );
 
@@ -34,10 +34,10 @@ public class Activity_Dvd extends AppCompatActivity {
         String barCode = monDvd.getBarcode();
         String localization = monDvd.getLocalization();
 
-        textViewBarcode.setText("Barcode:  " + barCode );
-        textViewLoca.setText("Localisation:  " + localization );
+        textViewBarcode.setText("Barcode :  " + barCode );
+        textViewLoca.setText("Localisation :  " + localization );
         textViewSummary.setText( summary );
-        textViewTitle.setText("Titre:  " + title );
+        textViewTitle.setText("Titre :  " + title );
 
 
     }
