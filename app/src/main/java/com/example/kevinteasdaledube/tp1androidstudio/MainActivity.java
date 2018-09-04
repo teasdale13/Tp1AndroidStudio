@@ -38,11 +38,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPreExecute() {
-
-        }
-
-        @Override
         protected List<Media> doInBackground(Void... urls) {
             try {
                 InputStream is;

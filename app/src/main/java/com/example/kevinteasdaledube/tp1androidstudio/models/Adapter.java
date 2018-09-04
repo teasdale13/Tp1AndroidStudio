@@ -18,14 +18,11 @@ public class Adapter extends RecyclerView.Adapter<Adapter.ViewHolder>{
     private static List<Media> mediaList;
     private static Context context;
 
-
-
     public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener , Serializable {
 
         private final TextView title;
         private final TextView mediaType;
         ViewGroup viewGroup;
-
 
         public ViewHolder(View view) {
             super(view);
