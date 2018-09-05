@@ -112,14 +112,14 @@
     <ImageView
         android:id="@+id/imageViewProjecteur"
         android:layout_width="463dp"
-        android:layout_height="346dp"
+        android:layout_height="335dp"
         android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.338"
+        app:layout_constraintHorizontal_bias="0.235"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/imageViewBobine1"
         app:layout_constraintVertical_bias="0.0"
@@ -135,7 +135,7 @@
         android:layout_marginTop="8dp"
         app:layout_constraintBottom_toBottomOf="@+id/imageViewType"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.113"
+        app:layout_constraintHorizontal_bias="0.147"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/videoView"
         app:layout_constraintVertical_bias="0.0"
@@ -154,7 +154,7 @@
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/imageViewBobine1"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.086"
+        app:layout_constraintVertical_bias="0.07"
         app:srcCompat="@drawable/film" />
 
 </android.support.constraint.ConstraintLayout>

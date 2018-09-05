@@ -14,10 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.kevinteasdaledube.tp1androidstudio.R;
-
 import java.io.IOException;
-
-
 
 public class Activity_Mp3 extends AppCompatActivity implements Jouable {
 
@@ -141,6 +138,7 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
         mediaPlayer.stop();
         mediaPlayer.release();
         btnPlay.setEnabled( true );
+        btnPause.setEnabled( true );
         firstTime = true;
         anim.cancel();
         animationMp3.cancel( true );
@@ -157,7 +155,6 @@ public class Activity_Mp3 extends AppCompatActivity implements Jouable {
             onStop = true;
         }
     }
-
 
     public static class AnimationMp3 extends AsyncTask<Void, Void, Void> {
 
